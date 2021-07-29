@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="row row-cells" v-for="items in matrix">
-                <Cell v-for="item in items" :cell="item" :key="item.number + item.scale" />
+                <Cell-component v-for="item in items" :cell="item" :key="item.number + item.scale" />
             </div>
 
         </div>
@@ -12,11 +12,11 @@
 <script>
     import options from '../helpers/options'
     import {ref, watch} from 'vue'
-    import Cell from './Cell.vue'
+    import CellComponent from './Cell.vue'
 
     export default {
         name: "Field",
-        components: {Cell},
+        components: {CellComponent},
         setup(props) {
             const getMatrix = function (count) {
                 let cur = [];

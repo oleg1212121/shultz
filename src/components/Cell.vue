@@ -1,6 +1,6 @@
 <template>
     <div class="cell"
-         :class="{touched: cell.touched, shake: !cell.touched && wrong}" @click="touch"
+        :class="{touched: cell.touched, shake: !cell.touched && wrong}" @click="touch"
         :style="`width: ${cell.scale}; height: ${cell.scale}`"
     >
         <div class="cell-inner">
@@ -39,10 +39,7 @@
                     timeout = window.setTimeout(() => {
                         wrong.value = false
                     }, 300)
-
                 }
-
-
             }
 
             return {
@@ -57,8 +54,6 @@
         margin: 0;
         padding: 0;
         display: inline-block;
-        /*width: 50px;*/
-        /*height: 50px;*/
         background: #598dff;
         border: 1px solid #c1c1c1;
         color: #fff;
@@ -92,18 +87,15 @@
         90% {
             transform: translate3d(-1px, 0, 0);
         }
-
         20%,
         80% {
             transform: translate3d(2px, 0, 0);
         }
-
         30%,
         50%,
         70% {
             transform: translate3d(-4px, 0, 0);
         }
-
         40%,
         60% {
             transform: translate3d(4px, 0, 0);

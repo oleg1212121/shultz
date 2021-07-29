@@ -1,30 +1,27 @@
 <template>
     <div class="container">
-        <Options/>
+        <Options-component />
         <hr>
         <h1>
             {{currentNumber}}
         </h1>
         <hr>
-
         <br>
-        <Field />
+        <Field-component />
     </div>
 </template>
 
 <script>
-    import Options from './components/Options.vue'
-    import Field from './components/Field.vue'
+    import OptionsComponent from './components/Options.vue'
+    import FieldComponent from './components/Field.vue'
     import options from './helpers/options.js'
 
     export default {
         name: 'App',
         components: {
-            Options, Field
+            OptionsComponent, FieldComponent
         },
         setup(props) {
-
-
             return {
                 ...options
             }

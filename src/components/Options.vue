@@ -34,16 +34,9 @@
     export default {
         name: "Options",
         setup(props){
-
-
-
             return {
                 ...options
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>
