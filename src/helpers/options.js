@@ -57,7 +57,8 @@ const getMatrix = function (count) {
             cur[a].push({
                 number: val + 1,
                 touched: false,
-                scale: `${checkedCell.value}px`
+                scale: `${checkedCell.value}px`,
+                wrong: false
             });
         }
     }
@@ -76,8 +77,47 @@ const currentNumber = ref(1);
 const matrix = ref(getMatrix(checked.value));
 
 const refreshMatrix = function () {
+    startTime = 0;
     matrix.value = getMatrix(checked.value);
     currentNumber.value = 1
 };
 
-export default {fieldScales, checked, checkedCell, currentNumber, cellScales, startTime, resultTime, refreshMatrix, matrix}
+function touch(number) {
+    let timeout;
+    let cell = {};
+    matrix.value.some(function (element) {
+        let e = element.some(function (el) {
+            if(el.number === number){
+                cell = el;
+                return true
+            }
+        });
+        if (e){
+            return e
+        }
+    });
+    if(!startTime){
+        startTime = new Date().getTime();
+    }
+    if (cell.number === currentNumber.value) {
+        cell.touched = true;
+        const limit = checked.value * checked.value;
+        if (currentNumber.value < limit) {
+            currentNumber.value += 1
+        } else {
+            resultTime.value = ((new Date()).getTime() - startTime)/(1000)
+        }
+    } else {
+        window.clearTimeout(timeout);
+        cell.wrong = true;
+        timeout = window.setTimeout(() => {
+            cell.wrong = false
+        }, 300)
+    }
+}
+
+
+export default {
+    fieldScales, checked, checkedCell, currentNumber, cellScales,
+    startTime, resultTime, refreshMatrix, matrix, touch
+}

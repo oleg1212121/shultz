@@ -1,6 +1,6 @@
 <template>
     <div class="cell"
-        :class="{touched: cell.touched, shake: !cell.touched && wrong}" @click="touch"
+        :class="{touched: cell.touched, shake: !cell.touched && cell.wrong}" @click="touch(cell.number)"
         :style="`width: ${cell.scale}; height: ${cell.scale}`"
     >
         <div class="cell-inner">
@@ -10,7 +10,6 @@
 </template>
 
 <script>
-    import {ref} from 'vue'
     import options from '../helpers/options.js'
 
     export default {
@@ -21,32 +20,8 @@
             }
         },
         setup({cell}) {
-            const wrong = ref(false);
-            let timeout;
-
-            function touch() {
-                if(!options.startTime){
-                    options.startTime = new Date().getTime();
-                }
-                if (cell.number === options.currentNumber.value) {
-                    cell.touched = true;
-                    const limit = options.checked.value * options.checked.value;
-                    if (options.currentNumber.value < limit) {
-                        options.currentNumber.value += 1
-                    } else {
-                        options.resultTime.value = ((new Date()).getTime() - options.startTime)/(1000)
-                    }
-                } else {
-                    window.clearTimeout(timeout);
-                    wrong.value = true;
-                    timeout = window.setTimeout(() => {
-                        wrong.value = false
-                    }, 300)
-                }
-            }
-
             return {
-                cell, touch, wrong
+                cell, ...options
             }
         }
     }
@@ -61,6 +36,7 @@
         border: 1px solid #c1c1c1;
         color: #fff;
         font-size: 25px;
+        user-select: none;
     }
 
     .cell-inner {
