@@ -25,13 +25,16 @@
             let timeout;
 
             function touch() {
+                if(!options.startTime){
+                    options.startTime = new Date().getTime();
+                }
                 if (cell.number === options.currentNumber.value) {
                     cell.touched = true;
                     const limit = options.checked.value * options.checked.value;
                     if (options.currentNumber.value < limit) {
                         options.currentNumber.value += 1
                     } else {
-                        alert('POBEDA')
+                        options.resultTime.value = ((new Date()).getTime() - options.startTime)/(1000)
                     }
                 } else {
                     window.clearTimeout(timeout);
@@ -83,6 +86,9 @@
     }
 
     @keyframes shake {
+        0% {
+            background: #ff4543;
+        }
         10%,
         90% {
             transform: translate3d(-1px, 0, 0);
@@ -99,6 +105,9 @@
         40%,
         60% {
             transform: translate3d(4px, 0, 0);
+        }
+        100% {
+            background: #598dff;
         }
     }
 </style>

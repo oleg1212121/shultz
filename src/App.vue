@@ -5,6 +5,10 @@
         <h1>
             {{currentNumber}}
         </h1>
+        <br>
+        <h2>
+            {{resultTime}} - sec
+        </h2>
         <hr>
         <br>
         <Field-component />

@@ -45,16 +45,39 @@ const cellScales = [
     },
 ];
 
+let startTime = 0;
+const resultTime = ref(0);
+const getMatrix = function (count) {
+    let cur = [];
+    let numbers = [...(new Array(count * count).keys())].sort(() => Math.random() - 0.5);
+    for(let a = 0; a < count; a++){
+        cur.push([]);
+        for(let b = 0; b < count; b++){
+            let val = numbers.pop();
+            cur[a].push({
+                number: val + 1,
+                touched: false,
+                scale: `${checkedCell.value}px`
+            });
+        }
+    }
+    return cur;
+};
 const checkedId = fieldScales.find(function (item) {
     if (item.isChecked) return true
 });
 const checkedCellId = cellScales.find(function (item) {
     if (item.isChecked) return true
 });
-
 const checked = ref(checkedId ? checkedId.id : 5);
 const checkedCell = ref(checkedCellId ? checkedCellId.id : 50);
-
 const currentNumber = ref(1);
 
-export default {fieldScales, checked, checkedCell, currentNumber, cellScales}
+const matrix = ref(getMatrix(checked.value));
+
+const refreshMatrix = function () {
+    matrix.value = getMatrix(checked.value);
+    currentNumber.value = 1
+};
+
+export default {fieldScales, checked, checkedCell, currentNumber, cellScales, startTime, resultTime, refreshMatrix, matrix}
